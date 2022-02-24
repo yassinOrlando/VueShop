@@ -3,9 +3,9 @@ import PageTitle from "@/components/PageTitle.vue";
 </script>
 
 <template>
-  <PageTitle title="Home" />
+  <PageTitle title="My cart" />
 
-  <p>My home page</p>
+  <p>My cart page</p>
 </template>
 
 <style>

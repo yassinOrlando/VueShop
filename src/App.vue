@@ -19,7 +19,7 @@ import WebsiteTitle from "@/components/WebsiteTitle.vue";
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/">&#128722; Cart (0)</RouterLink>
+        <RouterLink to="/cart">&#128722; Cart (0)</RouterLink>
       </nav>
     </div>
   </header>
@@ -43,6 +43,7 @@ import WebsiteTitle from "@/components/WebsiteTitle.vue";
 main {
   width: 80%;
   margin: 0 auto;
+  min-height: 100vh;
 }
 
 header {
