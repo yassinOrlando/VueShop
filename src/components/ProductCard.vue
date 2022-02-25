@@ -19,7 +19,7 @@ defineProps({
 
     <h3 class="prod-price">${{ prod.price }}</h3>
 
-    <button class="see-prod-btn">See</button>
+    <RouterLink class="see-prod-btn" to="/product-details">See</RouterLink>
   </div>
 </template>
 
@@ -72,7 +72,7 @@ h3 {
   color: white;
   width: 90%;
   margin: 0 auto;
-  padding: 6px;
+  padding: 6px 1.3rem;
   font-weight: bold;
 }
 </style>

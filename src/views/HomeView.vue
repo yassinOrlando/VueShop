@@ -1,6 +1,7 @@
 <script setup>
 import PageTitle from "@/components/PageTitle.vue";
 import ProductCard from "@/components/ProductCard.vue";
+import LoaderSpinner from "@/components/LoaderSpinner.vue";
 </script>
 
 <template>
@@ -8,11 +9,13 @@ import ProductCard from "@/components/ProductCard.vue";
 
   <div class="content">
     <div class="product-list-container">
-      <ProductCard v-for="prod in prodList" :key="prod.id" :prod="prod" />
+      <LoaderSpinner v-if="loadingProd" />
+      <ProductCard v-for="prod in prodList" :key="prod.id" :prod="prod"/>
     </div>
 
     <div class="categories-list">
       <h2>Categories</h2>
+      <LoaderSpinner v-if="loadingCat" />
       <div v-for="cat in catList" :key="cat">
         <hr />
         <p>{{ cat }}</p>
@@ -27,23 +30,31 @@ export default {
     return {
       catList: [],
       prodList: [],
+      loadingProd: false,
+      loadingCat: false,
     };
   },
   methods: {
-    getCategories() {
-      fetch("https://fakestoreapi.com/products/categories")
+    async getCategories() {
+      await fetch("https://fakestoreapi.com/products/categories")
         .then((res) => res.json())
         .then((list) => (this.catList = list));
+
+      this.loadingCat = false;
     },
-    getAllProds() {
-      fetch("https://fakestoreapi.com/products")
+    async getAllProds() {
+      await fetch("https://fakestoreapi.com/products")
         .then((res) => res.json())
         .then((list) => (this.prodList = list));
+
+      this.loadingProd = false;
     },
   },
-  mounted() {
-    this.getCategories();
-    this.getAllProds();
+  async mounted() {
+    this.loadingProd = true;
+    this.loadingCat = true;
+    await this.getCategories();
+    await this.getAllProds();
   },
 };
 </script>
