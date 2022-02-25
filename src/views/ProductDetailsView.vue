@@ -1,10 +1,37 @@
 <script setup>
-//import PageTitle from "@/components/PageTitle.vue";
+import LoaderSpinner from "@/components/LoaderSpinner.vue";
 </script>
 
 <template>
-  Details of the product page
+  <LoaderSpinner v-if="loadingProd" />
+
+  <div v-else>
+    {{ data }}
+  </div>
 </template>
 
-<style>
-</style>
+<script>
+export default {
+  data() {
+    return {
+      data: {},
+      loadingProd: false,
+    };
+  },
+  methods: {
+    async getProduct(prodId) {
+      await fetch("https://fakestoreapi.com/products/" + prodId)
+        .then((res) => res.json())
+        .then((product) => (this.data = product));
+
+      this.loadingProd = false;
+    },
+  },
+  mounted() {
+    this.loadingProd = true;
+    this.getProduct(this.$route.params.id);
+  }
+};
+</script>
+
+<style scoped></style>

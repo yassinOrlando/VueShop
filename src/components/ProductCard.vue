@@ -19,7 +19,12 @@ defineProps({
 
     <h3 class="prod-price">${{ prod.price }}</h3>
 
-    <RouterLink class="see-prod-btn" to="/product-details">See</RouterLink>
+    <RouterLink
+      class="see-prod-btn"
+      :to="{ name: 'product-details', params: { id: prod.id } }"
+    >
+      See
+    </RouterLink>
   </div>
 </template>
 
