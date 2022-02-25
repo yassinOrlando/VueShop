@@ -69,6 +69,8 @@ export default {
   width: 100%;
   text-align: center;
   margin-bottom: 1rem;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .categories-list h2 {
