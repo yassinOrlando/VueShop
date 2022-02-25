@@ -103,6 +103,7 @@ footer {
   text-align: center;
   padding: 1rem;
   color: white;
+  margin-top: 1rem;
   background-color: hsla(160, 100%, 37%, 1);
 }
 
