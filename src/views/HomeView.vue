@@ -16,8 +16,7 @@ import LoaderSpinner from "@/components/LoaderSpinner.vue";
     <div class="categories-list">
       <h2>Categories</h2>
       <LoaderSpinner v-if="loadingCat" />
-      <div v-for="cat in catList" :key="cat">
-        <hr />
+      <div class="cat-field" v-for="cat in catList" :key="cat">
         <p>{{ cat }}</p>
       </div>
     </div>
@@ -90,6 +89,15 @@ export default {
 
 .categories-list p {
   margin: 0.5rem 0;
+}
+
+.cat-field {
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+}
+
+.cat-field:hover {
+  background-color: hsla(160, 100%, 37%, 0.2);
 }
 
 @media (min-width: 764px) {

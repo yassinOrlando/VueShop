@@ -43,7 +43,7 @@ import WebsiteTitle from "@/components/WebsiteTitle.vue";
 main {
   width: 80%;
   margin: 0 auto;
-  min-height: 100vh;
+  min-height: 75vh;
 }
 
 header {

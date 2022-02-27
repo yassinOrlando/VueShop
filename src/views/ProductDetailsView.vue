@@ -1,12 +1,13 @@
 <script setup>
 import LoaderSpinner from "@/components/LoaderSpinner.vue";
+import ProductDetails from "@/components/ProductDetails.vue";
 </script>
 
 <template>
   <LoaderSpinner v-if="loadingProd" />
 
   <div v-else>
-    {{ data }}
+    <ProductDetails :data="data" />
   </div>
 </template>
 
@@ -30,8 +31,9 @@ export default {
   mounted() {
     this.loadingProd = true;
     this.getProduct(this.$route.params.id);
-  }
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
