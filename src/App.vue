@@ -1,6 +1,5 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-//import { storeToRefs } from 'pinia';
 import { useCartStore } from "@/stores/cart";
 import WebsiteTitle from "@/components/WebsiteTitle.vue";
 

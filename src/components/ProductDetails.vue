@@ -1,10 +1,19 @@
 <script setup>
+import { useCartStore } from "@/stores/cart";
 defineProps({
   data: {
     type: Object,
     required: true,
   },
 });
+
+const cartStore = useCartStore();
+
+
+function addToMyCart(prodObj) {
+  cartStore.addToCart(prodObj);
+}
+
 </script>
 
 <template>
@@ -20,7 +29,7 @@ defineProps({
         {{ data.category }}
       </div>
       <div class="prod-price">${{ data.price }}</div>
-      <div class="add-btn" @click="addToCart">Add to cart</div>
+      <div class="add-btn" @click="addToMyCart(data)">Add to cart</div>
       <div class="rmv-btn" @click="addToCart">Remove from cart</div>
       <div>
         {{ data.description }}
@@ -30,13 +39,13 @@ defineProps({
 </template>
 
 <script>
-export default {
+/*export default {
   methods: {
     addToCart() {
       console.log("Added to cart");
     },
   },
-};
+};*/
 </script>
 
 <style scoped>
