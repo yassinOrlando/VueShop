@@ -76,7 +76,7 @@ export default {
 }
 
 .rmv-btn {
-    background-color: red !important;
+  background-color: red !important;
 }
 
 @media (max-width: 764px) {

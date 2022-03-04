@@ -1,6 +1,15 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+//import { storeToRefs } from 'pinia';
+import { useCartStore } from "@/stores/cart";
 import WebsiteTitle from "@/components/WebsiteTitle.vue";
+
+const cartStore = useCartStore();
+
+// eslint-disable-next-line no-unused-vars
+function mounted() {
+  console.log(cartStore); // 0
+}
 </script>
 
 <template>
@@ -19,7 +28,9 @@ import WebsiteTitle from "@/components/WebsiteTitle.vue";
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/cart">&#128722; Cart (0)</RouterLink>
+        <RouterLink to="/cart"> 
+          &#128722; Cart ( {{ cartStore.getCartLength }} ) 
+        </RouterLink>
       </nav>
     </div>
   </header>
