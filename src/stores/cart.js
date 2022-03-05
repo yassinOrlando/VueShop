@@ -3,14 +3,19 @@ import { defineStore } from "pinia";
 export const useCartStore = defineStore({
   id: "cart",
   state: () => ({
-    cart: [
-      { name: "prod1", description: "this is product 1" }, 
-      { name: "prod2", description: "this is product 2" }, 
-      { name: "prod3", description: "this is product 3" }
-    ],
+    cart: [],
   }),
   getters: {
     getCartLength: (state) => state.cart.length,
+    getTotalPrice: (state) => {
+      let totalPrice = 0;
+
+      state.cart.forEach((prod) => {
+        totalPrice += prod.price;
+      });
+
+      return totalPrice;
+    }
   },
   actions: {
     addToCart(prodObj) {

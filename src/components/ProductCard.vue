@@ -4,6 +4,10 @@ defineProps({
     type: Object,
     required: true,
   },
+  cartView: {
+    type: Boolean,
+    default: false
+  }
 });
 </script>
 
@@ -20,6 +24,7 @@ defineProps({
     <h3 class="prod-price">${{ prod.price }}</h3>
 
     <RouterLink
+      v-if="!cartView"
       class="see-prod-btn"
       :to="{ name: 'product-details', params: { id: prod.id } }"
     >
