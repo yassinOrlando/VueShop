@@ -16,5 +16,12 @@ export const useCartStore = defineStore({
     addToCart(prodObj) {
       this.cart.push(prodObj);
     },
+    removeFromCart(prodObj){
+      const prodsInCart = this.cart.filter(
+        (product) => product.id !== prodObj.id
+      );
+
+      this.cart = prodsInCart;
+    }
   },
 });

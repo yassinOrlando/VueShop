@@ -23,6 +23,12 @@ function addToMyCart(prodObj) {
   }
 }
 
+function deleteFromCart(prodObj){
+  cartStore.removeFromCart(prodObj);
+
+  state.isInCart = false;
+}
+
 function checkCart(){
   const prodInCart = cartStore.cart.find(
     (product) => product.id === props.data.id
@@ -53,7 +59,9 @@ onMounted(() => {
       <div class="add-btn" v-if="!state.isInCart" @click="addToMyCart(data)">
         Add to cart
       </div>
-      <div class="rmv-btn" v-else @click="addToCart">Remove from cart</div>
+      <div class="rmv-btn" v-else @click="deleteFromCart(data)">
+        Remove from cart
+      </div>
       <div>
         {{ data.description }}
       </div>
