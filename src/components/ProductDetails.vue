@@ -23,13 +23,13 @@ function addToMyCart(prodObj) {
   }
 }
 
-function deleteFromCart(prodObj){
+function deleteFromCart(prodObj) {
   cartStore.removeFromCart(prodObj);
 
   state.isInCart = false;
 }
 
-function checkCart(){
+function checkCart() {
   const prodInCart = cartStore.cart.find(
     (product) => product.id === props.data.id
   );
@@ -40,7 +40,7 @@ function checkCart(){
 // eslint-disable-next-line no-unused-vars
 onMounted(() => {
   state.isInCart = checkCart();
-})
+});
 </script>
 
 <template>

@@ -20,7 +20,7 @@ h2 {
   top: -10px;
 }
 
-.title-container h2{
+.title-container h2 {
   text-align: center;
   margin-top: 1rem;
 }

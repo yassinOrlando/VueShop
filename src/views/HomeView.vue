@@ -10,7 +10,7 @@ import LoaderSpinner from "@/components/LoaderSpinner.vue";
   <div class="content">
     <div class="product-list-container">
       <LoaderSpinner v-if="loadingProd" />
-      <ProductCard v-for="prod in prodList" :key="prod.id" :prod="prod"/>
+      <ProductCard v-for="prod in prodList" :key="prod.id" :prod="prod" />
     </div>
 
     <div class="categories-list">

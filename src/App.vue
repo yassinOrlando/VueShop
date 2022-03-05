@@ -27,8 +27,8 @@ function mounted() {
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/cart"> 
-          &#128722; Cart ( {{ cartStore.getCartLength }} ) 
+        <RouterLink to="/cart">
+          &#128722; Cart ( {{ cartStore.getCartLength }} )
         </RouterLink>
       </nav>
     </div>
