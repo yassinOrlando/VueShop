@@ -9,7 +9,11 @@ const cartStore = useCartStore();
 <template>
   <PageTitle :title="'My cart (' + cartStore.getCartLength + ')'" />
 
-  <div class="content">
+  <h2 id="empty-cart" v-if="cartStore.getCartLength == 0">
+    Your cart is empty :(
+  </h2>
+
+  <div v-else class="content">
     <div class="product-list-container">
       <ProductCard
         v-for="prod in cartStore.cart"
@@ -27,6 +31,9 @@ const cartStore = useCartStore();
 </template>
 
 <style>
+#empty-cart {
+  text-align: center;
+}
 .content {
   display: flex;
   flex-direction: column;

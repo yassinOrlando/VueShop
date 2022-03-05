@@ -1,4 +1,6 @@
 <script setup>
+import { useCartStore } from "@/stores/cart";
+
 defineProps({
   prod: {
     type: Object,
@@ -9,6 +11,8 @@ defineProps({
     default: false,
   },
 });
+
+const cartStore = useCartStore();
 </script>
 
 <template>
@@ -22,6 +26,20 @@ defineProps({
     <p class="prod-cat">{{ prod.category }}</p>
 
     <h3 class="prod-price">${{ prod.price }}</h3>
+
+    <p v-if="cartView" class="prod-cat">Quantity: {{ prod.quantity }}</p>
+    <div v-if="cartView">
+      <button @click="cartStore.incrementProdQuant(prod)">+</button>
+      <input
+        v-if="cartView"
+        type="number"
+        :value="prod.quantity"
+        readonly
+        min="1"
+        max="5"
+      />
+      <button @click="cartStore.decreaseProdQuant(prod)">-</button>
+    </div>
 
     <RouterLink
       v-if="!cartView"

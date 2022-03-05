@@ -11,22 +11,37 @@ export const useCartStore = defineStore({
       let totalPrice = 0;
 
       state.cart.forEach((prod) => {
-        totalPrice += prod.price;
+        totalPrice += prod.price * prod.quantity;
       });
 
-      return totalPrice;
-    }
+      return totalPrice.toFixed(2); // toFixed(2) limits the decimals to only 2
+    },
   },
   actions: {
     addToCart(prodObj) {
+      prodObj.quantity = 1;
       this.cart.push(prodObj);
     },
-    removeFromCart(prodObj){
+    removeFromCart(prodObj) {
       const prodsInCart = this.cart.filter(
         (product) => product.id !== prodObj.id
       );
 
       this.cart = prodsInCart;
+    },
+    incrementProdQuant(prodObj) {
+      this.cart.forEach((prod) => {
+        if (prodObj.id === prod.id) {
+          prodObj.quantity++;
+        }
+      });
+    },
+    decreaseProdQuant(prodObj) {
+      this.cart.forEach((prod) => {
+        if (prodObj.id === prod.id && prod.quantity > 1) {
+          prodObj.quantity--;
+        }
+      });
     },
   },
 });
