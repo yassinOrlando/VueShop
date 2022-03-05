@@ -1,6 +1,8 @@
 <script setup>
 import { useCartStore } from "@/stores/cart";
-defineProps({
+import { reactive, onMounted } from "vue";
+
+const props = defineProps({
   data: {
     type: Object,
     required: true,
@@ -8,12 +10,31 @@ defineProps({
 });
 
 const cartStore = useCartStore();
-
+const state = reactive({ isInCart: false });
 
 function addToMyCart(prodObj) {
-  cartStore.addToCart(prodObj);
+  const prodInCart = cartStore.cart.find(
+    (product) => product.id === prodObj.id
+  );
+
+  if (!prodInCart) {
+    cartStore.addToCart(prodObj);
+    state.isInCart = true;
+  }
 }
 
+function checkCart(){
+  const prodInCart = cartStore.cart.find(
+    (product) => product.id === props.data.id
+  );
+
+  return prodInCart ? true : false;
+}
+
+// eslint-disable-next-line no-unused-vars
+onMounted(() => {
+  state.isInCart = checkCart();
+})
 </script>
 
 <template>
@@ -29,24 +50,16 @@ function addToMyCart(prodObj) {
         {{ data.category }}
       </div>
       <div class="prod-price">${{ data.price }}</div>
-      <div class="add-btn" @click="addToMyCart(data)">Add to cart</div>
-      <div class="rmv-btn" @click="addToCart">Remove from cart</div>
+      <div class="add-btn" v-if="!state.isInCart" @click="addToMyCart(data)">
+        Add to cart
+      </div>
+      <div class="rmv-btn" v-else @click="addToCart">Remove from cart</div>
       <div>
         {{ data.description }}
       </div>
     </div>
   </div>
 </template>
-
-<script>
-/*export default {
-  methods: {
-    addToCart() {
-      console.log("Added to cart");
-    },
-  },
-};*/
-</script>
 
 <style scoped>
 .prod-card {
