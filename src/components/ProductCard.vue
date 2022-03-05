@@ -27,8 +27,8 @@ const cartStore = useCartStore();
 
     <h3 class="prod-price">${{ prod.price }}</h3>
 
-    <p v-if="cartView" class="prod-cat">Quantity: {{ prod.quantity }}</p>
     <div v-if="cartView">
+      <p class="prod-cat">Quantity:</p>
       <button @click="cartStore.incrementProdQuant(prod)">+</button>
       <input
         v-if="cartView"
@@ -39,6 +39,12 @@ const cartStore = useCartStore();
         max="5"
       />
       <button @click="cartStore.decreaseProdQuant(prod)">-</button>
+
+      <br />
+
+      <button @click="cartStore.removeFromCart(prod)" class="remove-btn">
+        Remove
+      </button>
     </div>
 
     <RouterLink
@@ -95,12 +101,23 @@ h3 {
   font-weight: bold;
 }
 
-.see-prod-btn {
-  background-color: hsla(160, 100%, 37%, 1);
+.see-prod-btn,
+.remove-btn {
   color: white;
-  width: 90%;
   margin: 0 auto;
   padding: 6px 1.3rem;
   font-weight: bold;
+}
+
+.see-prod-btn {
+  background-color: hsla(160, 100%, 37%, 1);
+  width: 90%;
+}
+
+.remove-btn {
+  background-color: red;
+  margin-top: 10px !important;
+  border-radius: 5px;
+  border: 0;
 }
 </style>
