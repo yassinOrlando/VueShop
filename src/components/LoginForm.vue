@@ -15,8 +15,8 @@ function login() {
     fetch("https://fakestoreapi.com/auth/login", {
       method: "POST",
       body: JSON.stringify({
-        username: "mor_2314",
-        password: "83r5^_",
+        username: form.username,
+        password: form.password,
       }),
     })
       .then((res) => res.json())
