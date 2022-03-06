@@ -4,14 +4,24 @@ import { reactive } from "vue";
 const form = reactive({
   username: "",
   password: "",
-  hasError: null,
+  hasError: false,
+  errorMsg: "",
 });
 
 function login() {
   if (form.username == "" || form.password == "") {
     form.hasError = true;
+    form.errorMsg = "The form must be filled";
+
     console.log("Form has errors");
+    console.log("Available users");
+    fetch("https://fakestoreapi.com/users")
+      .then((res) => res.json())
+      .then((json) => console.log(json));
   } else {
+    form.hasError = false;
+    form.errorMsg = "";
+
     fetch("https://fakestoreapi.com/auth/login", {
       method: "POST",
       body: JSON.stringify({
@@ -20,7 +30,12 @@ function login() {
       }),
     })
       .then((res) => res.json())
-      .then((json) => console.log(json));
+      .then((token) => console.log(token))
+      .catch((err) => {
+        form.hasError = true;
+        form.errorMsg =
+          "Something went wrong. Please try later. Error: " + err.stringify;
+      });
   }
 }
 </script>
@@ -32,9 +47,6 @@ function login() {
       Username: mor_2314 <br />
       Password: 83r5^_ <br />
     </p>
-
-    {{ form.username }}
-    {{ form.password }}
 
     <input
       type="text"
@@ -51,6 +63,8 @@ function login() {
       name="password"
       id="password"
     />
+
+    <p v-if="form.hasError" class="has-errors">{{ form.errorMsg }}</p>
 
     <button @click="login" class="sign-btn">Sign in</button>
   </form>
@@ -82,6 +96,14 @@ form input {
   background-color: hsla(160, 100%, 37%, 1);
   width: 50%;
   border: 0;
+}
+
+.has-errors {
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  padding: 5px;
 }
 
 @media (min-width: 750px) {
