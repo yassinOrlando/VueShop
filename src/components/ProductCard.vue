@@ -1,5 +1,5 @@
 <script setup>
-import { useCartStore } from "@/stores/cart";
+import ProdQuant from "./ProdQuant.vue";
 
 defineProps({
   prod: {
@@ -11,8 +11,6 @@ defineProps({
     default: false,
   },
 });
-
-const cartStore = useCartStore();
 </script>
 
 <template>
@@ -27,25 +25,7 @@ const cartStore = useCartStore();
 
     <h3 class="prod-price">${{ prod.price }}</h3>
 
-    <div v-if="cartView">
-      <p class="prod-cat">Quantity:</p>
-      <button @click="cartStore.incrementProdQuant(prod)">+</button>
-      <input
-        v-if="cartView"
-        type="number"
-        :value="prod.quantity"
-        readonly
-        min="1"
-        max="5"
-      />
-      <button @click="cartStore.decreaseProdQuant(prod)">-</button>
-
-      <br />
-
-      <button @click="cartStore.removeFromCart(prod)" class="remove-btn">
-        Remove
-      </button>
-    </div>
+    <ProdQuant v-if="cartView" :prod="prod" />
 
     <RouterLink
       v-if="!cartView"
@@ -101,23 +81,12 @@ h3 {
   font-weight: bold;
 }
 
-.see-prod-btn,
-.remove-btn {
+.see-prod-btn {
   color: white;
   margin: 0 auto;
   padding: 6px 1.3rem;
   font-weight: bold;
-}
-
-.see-prod-btn {
   background-color: hsla(160, 100%, 37%, 1);
   width: 90%;
-}
-
-.remove-btn {
-  background-color: red;
-  margin-top: 10px !important;
-  border-radius: 5px;
-  border: 0;
 }
 </style>

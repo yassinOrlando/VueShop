@@ -30,6 +30,7 @@ function mounted() {
         <RouterLink to="/cart">
           &#128722; Cart ( {{ cartStore.getCartLength }} )
         </RouterLink>
+        <RouterLink to="/login">Sign in</RouterLink>
       </nav>
     </div>
   </header>
