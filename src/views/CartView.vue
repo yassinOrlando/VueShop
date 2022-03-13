@@ -6,6 +6,31 @@ import { useUserStore } from "@/stores/user";
 
 const cartStore = useCartStore();
 const userStore = useUserStore();
+
+function buy() {
+  let prodList = [];
+
+  cartStore.cart.forEach((prod) => {
+    prodList.push({
+      productId: prod.id,
+      quantity: prod.quantity,
+    });
+  });
+
+  fetch("https://fakestoreapi.com/carts", {
+    method: "POST",
+    body: JSON.stringify({
+      userId: userStore.userId,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      date: Date.now(),
+      products: prodList,
+    }),
+  })
+    .then((res) => res.json())
+    .then((cartId) => console.log(cartId));
+}
 </script>
 
 <template>
@@ -28,7 +53,7 @@ const userStore = useUserStore();
     <div class="price-card">
       <h2>Total price</h2>
       <h3 class="price">${{ cartStore.getTotalPrice }}</h3>
-      <button v-if="userStore.isLoggedIn">Buy</button>
+      <button v-if="userStore.isLoggedIn" @click="buy">Buy</button>
       <button v-else class="please-login">Please sign in to buy</button>
     </div>
   </div>

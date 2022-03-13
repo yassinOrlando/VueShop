@@ -5,6 +5,7 @@ export const useUserStore = defineStore({
   state: () => ({
     isLoggedIn: false,
     username: "",
+    userId: 0,
     token: "",
   }),
   getters: {
@@ -12,15 +13,21 @@ export const useUserStore = defineStore({
     getUserToken: (state) => state.token,
   },
   actions: {
-    setUser(username, token) {
+    setUser(username, token, id) {
       this.username = username;
       this.token = token;
+      this.userId = id;
       this.isLoggedIn = true;
     },
     logout() {
-      this.username = "";
-      this.token = "";
-      this.isLoggedIn = false;
+      let res = confirm("Are you sure you want to log out?");
+
+      if (res) {
+        this.username = "";
+        this.token = "";
+        this.isLoggedIn = false;
+        this.userId = 0;
+      }
     },
   },
 });

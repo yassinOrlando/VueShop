@@ -40,10 +40,19 @@ function login() {
       }),
     })
       .then((res) => res.json())
-      .then((token) => {
-        console.log(token);
+      .then(async (token) => {
+        let res = await fetch("https://fakestoreapi.com/users");
+        let userList = await res.json();
 
-        user.setUser(form.username, token);
+        let myUser = userList.filter((user) => {
+          return user.username == form.username;
+        });
+
+        myUser = myUser[0];
+
+        console.log(myUser);
+
+        user.setUser(myUser.username, token, myUser.id);
 
         form.isLoading = false;
       })

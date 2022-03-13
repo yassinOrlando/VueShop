@@ -27,7 +27,9 @@ function mounted() {
     <div class="wrapper">
       <WebsiteTitle msg="VueShop" />
 
-      <p id="user-msg" v-if="userStore.isLoggedIn">User: {{ userStore.getUsername }}</p>
+      <p id="user-msg" v-if="userStore.isLoggedIn">
+        User: {{ userStore.getUsername }}
+      </p>
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
@@ -35,7 +37,9 @@ function mounted() {
         <RouterLink to="/cart">
           &#128722; Cart ( {{ cartStore.getCartLength }} )
         </RouterLink>
-        <RouterLink to="/login">Sign in</RouterLink>
+        <RouterLink to="/login">
+          {{ userStore.isLoggedIn ? "Logout" : "Sign in" }}
+        </RouterLink>
       </nav>
     </div>
   </header>
