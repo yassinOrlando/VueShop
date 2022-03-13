@@ -1,11 +1,17 @@
 <script setup>
 import { reactive } from "vue";
+import { useUserStore } from "@/stores/user";
+
+import LoaderSpinner from "@/components/LoaderSpinner.vue";
+
+const user = useUserStore();
 
 const form = reactive({
   username: "",
   password: "",
   hasError: false,
   errorMsg: "",
+  isLoading: false,
 });
 
 function login() {
@@ -21,31 +27,44 @@ function login() {
   } else {
     form.hasError = false;
     form.errorMsg = "";
+    form.isLoading = true;
 
     fetch("https://fakestoreapi.com/auth/login", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         username: form.username,
         password: form.password,
       }),
     })
       .then((res) => res.json())
-      .then((token) => console.log(token))
+      .then((token) => {
+        console.log(token);
+
+        user.setUser(form.username, token);
+
+        form.isLoading = false;
+      })
       .catch((err) => {
         form.hasError = true;
         form.errorMsg =
-          "Something went wrong. Please try later. Error: " + err.stringify;
+          "Error on username or password. Error: " + err.stringify;
+        form.isLoading = false;
       });
   }
 }
 </script>
 
 <template>
-  <form action="" @submit.prevent="onSubmit">
+  <LoaderSpinner v-if="form.isLoading" />
+
+  <form v-else action="" @submit.prevent="onSubmit">
     <p>
       <b>Try with:</b> <br />
-      Username: mor_2314 <br />
-      Password: 83r5^_ <br />
+      Username: johnd <br />
+      Password: m38rmF$ <br />
     </p>
 
     <input
@@ -83,7 +102,7 @@ form input {
   width: 100%;
   margin: 5px auto;
   border-radius: 5px;
-  border: 0;
+  border: 1px solid var(--color-border);
   padding: 5px;
 }
 

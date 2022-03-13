@@ -41,5 +41,6 @@ const cartStore = useCartStore();
   margin: 0 auto;
   padding: 6px 1.3rem;
   font-weight: bold;
+  cursor: pointer;
 }
 </style>

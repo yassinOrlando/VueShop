@@ -51,6 +51,10 @@ function mounted() {
   /*font-weight: normal;*/
 }
 
+button {
+  cursor: pointer;
+}
+
 main {
   width: 80%;
   margin: 0 auto;

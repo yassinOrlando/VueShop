@@ -88,5 +88,6 @@ h3 {
   font-weight: bold;
   background-color: hsla(160, 100%, 37%, 1);
   width: 90%;
+  cursor: pointer;
 }
 </style>

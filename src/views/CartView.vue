@@ -2,8 +2,10 @@
 import PageTitle from "@/components/PageTitle.vue";
 import ProductCard from "@/components/ProductCard.vue";
 import { useCartStore } from "@/stores/cart";
+import { useUserStore } from "@/stores/user";
 
 const cartStore = useCartStore();
+const userStore = useUserStore();
 </script>
 
 <template>
@@ -26,6 +28,8 @@ const cartStore = useCartStore();
     <div class="price-card">
       <h2>Total price</h2>
       <h3 class="price">${{ cartStore.getTotalPrice }}</h3>
+      <button v-if="userStore.isLoggedIn">Buy</button>
+      <button v-else class="please-login">Please sign in to buy</button>
     </div>
   </div>
 </template>
@@ -57,17 +61,32 @@ const cartStore = useCartStore();
   order: 1;
   border: 1px solid var(--color-border);
   width: 100%;
-  max-height: 100px;
+  max-height: 120px;
   text-align: center;
   margin-bottom: 1rem;
   border-radius: 10px;
   overflow: hidden;
-  padding: 10px;
+  padding-top: 10px;
 }
 
 .price {
   color: hsla(160, 100%, 37%, 1);
   font-weight: bold;
+}
+
+.price-card button {
+  color: white;
+  margin: 0 auto;
+  padding: 6px 1.3rem;
+  font-weight: bold;
+  background-color: hsla(160, 100%, 37%, 1);
+  width: 100%;
+  border: 0;
+  height: 50px;
+}
+
+.please-login {
+  background-color: #ffc107 !important;
 }
 
 @media (min-width: 764px) {
@@ -85,6 +104,7 @@ const cartStore = useCartStore();
     order: 2;
     width: 20%;
     padding: 0;
+    max-height: 100px;
   }
 }
 </style>
