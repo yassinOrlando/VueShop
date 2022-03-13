@@ -1,9 +1,12 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import { useCartStore } from "@/stores/cart";
+import { useUserStore } from "@/stores/user";
+
 import WebsiteTitle from "@/components/WebsiteTitle.vue";
 
 const cartStore = useCartStore();
+const userStore = useUserStore();
 
 // eslint-disable-next-line no-unused-vars
 function mounted() {
@@ -23,6 +26,8 @@ function mounted() {
 
     <div class="wrapper">
       <WebsiteTitle msg="VueShop" />
+
+      <p id="user-msg" v-if="userStore.isLoggedIn">User: {{ userStore.getUsername }}</p>
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
@@ -49,6 +54,11 @@ function mounted() {
 
 #app {
   /*font-weight: normal;*/
+}
+
+#user-msg {
+  font-weight: bold;
+  text-align: center;
 }
 
 button {
