@@ -4,6 +4,12 @@ export const useCartStore = defineStore({
   id: "cart",
   state: () => ({
     cart: [],
+    lastCart: {
+      // The cart that was bought before the actual cart. Used when buying a new cart
+      id: 0,
+      totalPrice: 0,
+      products: [],
+    },
   }),
   getters: {
     getCartLength: (state) => state.cart.length,
@@ -42,6 +48,12 @@ export const useCartStore = defineStore({
           prodObj.quantity--;
         }
       });
+    },
+    setLastCart(newCartId) {
+      this.lastCart.id = newCartId;
+      this.lastCart.products = this.cart;
+      this.lastCart.totalPrice = this.getTotalPrice;
+      this.cart = [];
     },
   },
 });

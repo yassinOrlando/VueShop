@@ -1,13 +1,18 @@
 <script setup>
 import PageTitle from "@/components/PageTitle.vue";
+import LoaderSpinner from "@/components/LoaderSpinner.vue";
 import ProductCard from "@/components/ProductCard.vue";
 import { useCartStore } from "@/stores/cart";
 import { useUserStore } from "@/stores/user";
+import { reactive } from "vue";
 
 const cartStore = useCartStore();
 const userStore = useUserStore();
 
+const state = reactive({ isLoading: false });
+
 function buy() {
+  state.isLoading = true;
   let prodList = [];
 
   cartStore.cart.forEach((prod) => {
@@ -29,34 +34,42 @@ function buy() {
     }),
   })
     .then((res) => res.json())
-    .then((cartId) => console.log(cartId));
+    .then((cartId) => {
+      cartStore.setLastCart(cartId);
+      alert("Thank you for buying with us!");
+      state.isLoading = false;
+    });
 }
 </script>
 
 <template>
   <PageTitle :title="'My cart (' + cartStore.getCartLength + ')'" />
 
-  <h2 id="empty-cart" v-if="cartStore.getCartLength == 0">
-    Your cart is empty :(
-  </h2>
+  <div v-if="!state.isLoading">
+    <h2 id="empty-cart" v-if="cartStore.getCartLength == 0">
+      Your cart is empty :(
+    </h2>
 
-  <div v-else class="content">
-    <div class="product-list-container">
-      <ProductCard
-        v-for="prod in cartStore.cart"
-        :key="prod.id"
-        :prod="prod"
-        :cartView="true"
-      />
-    </div>
+    <div v-else class="content">
+      <div class="product-list-container">
+        <ProductCard
+          v-for="prod in cartStore.cart"
+          :key="prod.id"
+          :prod="prod"
+          :cartView="true"
+        />
+      </div>
 
-    <div class="price-card">
-      <h2>Total price</h2>
-      <h3 class="price">${{ cartStore.getTotalPrice }}</h3>
-      <button v-if="userStore.isLoggedIn" @click="buy">Buy</button>
-      <button v-else class="please-login">Please sign in to buy</button>
+      <div class="price-card">
+        <h2>Total price</h2>
+        <h3 class="price">${{ cartStore.getTotalPrice }}</h3>
+        <button v-if="userStore.isLoggedIn" @click="buy">Buy</button>
+        <button v-else class="please-login">Please sign in to buy</button>
+      </div>
     </div>
   </div>
+
+  <LoaderSpinner v-if="state.isLoading" />
 </template>
 
 <style>

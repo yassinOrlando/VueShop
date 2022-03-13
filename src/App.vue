@@ -2,16 +2,29 @@
 import { RouterLink, RouterView } from "vue-router";
 import { useCartStore } from "@/stores/cart";
 import { useUserStore } from "@/stores/user";
+import { ref } from "vue";
 
 import WebsiteTitle from "@/components/WebsiteTitle.vue";
 
 const cartStore = useCartStore();
 const userStore = useUserStore();
 
+const checked = ref(false);
+
 // eslint-disable-next-line no-unused-vars
 function mounted() {
   console.log(cartStore); // 0
 }
+
+/*function changeTheme(){
+  let content = document.getElementById("content");
+
+  if (checked){
+    window.matchMedia("(prefers-color-scheme: dark)");
+  } else {
+    window.matchMedia("(prefers-color-scheme: light)");
+  }
+} */
 </script>
 
 <template>
@@ -30,6 +43,11 @@ function mounted() {
       <p id="user-msg" v-if="userStore.isLoggedIn">
         User: {{ userStore.getUsername }}
       </p>
+
+      <!--<div>
+        Dark mode:
+        <input type="checkbox" v-model="checked" @change="changeTheme" name="theme" id="theme" /> {{ checked }}
+      </div> -->
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
