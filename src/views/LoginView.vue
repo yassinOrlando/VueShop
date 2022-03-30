@@ -1,10 +1,27 @@
 <script setup>
 import PageTitle from "@/components/PageTitle.vue";
 import LoginForm from "@/components/LoginForm.vue";
+import { onMounted, reactive } from "vue";
 
 import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();
+const users = reactive({
+  list: [],
+});
+
+async function availableUsers() {
+  const userList = await fetch("https://fakestoreapi.com/users");
+
+  return userList.json();
+}
+
+// eslint-disable-next-line no-unused-vars
+onMounted(() => {
+  availableUsers().then((data) => {
+    users.list = data;
+  });
+});
 </script>
 
 <template>
@@ -12,6 +29,17 @@ const userStore = useUserStore();
     <PageTitle title="Sign in" />
 
     <LoginForm />
+
+    <table>
+      <tr>
+        <th>Username</th>
+        <th>Password</th>
+      </tr>
+      <tr v-for="user in users.list" :key="user">
+        <td>{{ user.username }}</td>
+        <td>{{ user.password }}</td>
+      </tr>
+    </table>
   </div>
 
   <button v-else class="logout-btn" @click="userStore.logout">Log out</button>

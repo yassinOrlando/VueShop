@@ -52,6 +52,12 @@ function mounted() {
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink
+          v-if="userStore.getIsLogged"
+          :to="{ name: 'profile', params: { id: userStore.getUserId } }"
+        >
+          My profile
+        </RouterLink>
         <RouterLink to="/cart">
           &#128722; Cart ( {{ cartStore.getCartLength }} )
         </RouterLink>
