@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import { useUserStore } from "@/stores/user";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,6 +37,12 @@ const router = createRouter({
       path: "/user-profile/:id",
       name: "profile",
       component: () => import("../views/ProfileView.vue"),
+      beforeEnter: (to, from) => {
+        const userStore = useUserStore();
+
+        // reject the navigation
+        if (userStore.getUserToken == "") return false;
+      },
     },
   ],
 });
