@@ -32,6 +32,9 @@ onMounted(() => {
 
     <table>
       <tr>
+        <th colspan="2">More users</th>
+      </tr>
+      <tr>
         <th>Username</th>
         <th>Password</th>
       </tr>
@@ -56,5 +59,17 @@ onMounted(() => {
   width: 40%;
   border-radius: 5px;
   font-size: 20px;
+}
+
+table,
+th,
+td {
+  border: 1px solid var(--color-border);
+  border-collapse: collapse;
+  padding: 5px;
+}
+
+table {
+  margin: 15px auto;
 }
 </style>
