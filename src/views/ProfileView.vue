@@ -6,10 +6,18 @@ import { onMounted, reactive } from "vue";
 
 const userStore = useUserStore();
 
-const state = reactive({ isLoading: false, cartList: [] });
+const state = reactive({ isLoading: false, cartList: [], user: {} });
 
-onMounted(() => {
-  state.isLoading = true;
+function getUser() {
+  fetch("https://fakestoreapi.com/users/" + userStore.getUserId)
+    .then((res) => res.json())
+    .then((json) => {
+      state.user = json;
+      console.log(json);
+    });
+}
+
+function getUserCarts() {
   fetch("https://fakestoreapi.com/carts/user/" + userStore.getUserId)
     .then((res) => res.json())
     .then((json) => {
@@ -17,6 +25,12 @@ onMounted(() => {
       state.isLoading = false;
       console.log(json);
     });
+}
+
+onMounted(async () => {
+  state.isLoading = true;
+  await getUserCarts();
+  await getUser(); // This method contains the state.isLoading = false
 });
 </script>
 
@@ -24,6 +38,21 @@ onMounted(() => {
   <PageTitle title="My profile" />
 
   <div v-if="!state.isLoading">
+    <div class="profile-card" v-if="Object.keys(state.user).length !== 0">
+      <h2>{{ state.user.username }}</h2>
+      <h3>{{ state.user.email }}</h3>
+
+      <p>
+        Name: {{ state.user.name.firstname }} {{ state.user.name.lastname }}
+      </p>
+      <p>Phone: {{ state.user.phone }}</p>
+      <p>
+        Address: {{ state.user.address.street }} #{{
+          state.user.address.number
+        }}, {{ state.user.address.zipcode }}, {{ state.user.address.city }}
+      </p>
+    </div>
+
     <h2>Your cart list</h2>
 
     <div class="cart-container">
@@ -48,6 +77,15 @@ onMounted(() => {
 </template>
 
 <style>
+.profile-card {
+  width: 75%;
+  border: 1px solid var(--color-border);
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  margin: 10px auto;
+}
+
 .cart-container {
   width: 100%;
   display: flex;
