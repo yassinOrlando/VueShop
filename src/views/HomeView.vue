@@ -12,14 +12,6 @@ import LoaderSpinner from "@/components/LoaderSpinner.vue";
       <LoaderSpinner v-if="loadingProd" />
       <ProductCard v-for="prod in prodList" :key="prod.id" :prod="prod" />
     </div>
-
-    <div class="categories-list">
-      <h2>Categories</h2>
-      <LoaderSpinner v-if="loadingCat" />
-      <div class="cat-field" v-for="cat in catList" :key="cat">
-        <p>{{ cat }}</p>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -70,50 +62,5 @@ export default {
   justify-content: center;
   gap: 2rem;
   width: 100%;
-  order: 2;
-}
-
-.categories-list {
-  order: 1;
-  border: 1px solid var(--color-border);
-  width: 100%;
-  text-align: center;
-  margin-bottom: 1rem;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.categories-list h2 {
-  margin-bottom: 0.5rem;
-}
-
-.categories-list p {
-  margin: 0.5rem 0;
-}
-
-.cat-field {
-  border: 1px solid var(--color-border);
-  cursor: pointer;
-}
-
-.cat-field:hover {
-  background-color: hsla(160, 100%, 37%, 0.2);
-}
-
-@media (min-width: 764px) {
-  .content {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .product-list-container {
-    width: 70%;
-    order: 1;
-  }
-
-  .categories-list {
-    order: 2;
-    width: 20%;
-  }
 }
 </style>
