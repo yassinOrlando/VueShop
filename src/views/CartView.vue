@@ -72,7 +72,7 @@ function buy() {
   <LoaderSpinner v-if="state.isLoading" />
 </template>
 
-<style>
+<style scoped>
 #empty-cart {
   text-align: center;
 }
